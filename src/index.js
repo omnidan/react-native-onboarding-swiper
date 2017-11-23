@@ -22,10 +22,16 @@ class Onboarding extends Component {
   };
 
   goNext = () => {
-    this.flatList.scrollToIndex({
-      animated: true,
-      index: this.state.currentPage + 1,
-    });
+    const { pages } = this.props
+    const { currentPage } = this.state
+    if (currentPage >= pages.length - 2) {
+      this.flatList.scrollToEnd({ animated: true });
+    } else {
+      this.flatList.scrollToIndex({
+        animated: true,
+        index: currentPage + 1,
+      });
+    }
   };
 
   keyExtractor = (item, index) => index;
