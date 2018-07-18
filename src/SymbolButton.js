@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, ViewPropTypes } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -21,7 +21,7 @@ const SymbolButton = ({ size, onPress, style, textStyle, children }) => (
 SymbolButton.propTypes = {
   size: PropTypes.number.isRequired,
   onPress: PropTypes.func,
-  style: View.propTypes.style,
+  style: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
 };
 
