@@ -30,11 +30,7 @@ const SymbolButton = ({ size, onPress, style, textStyle, children }) => (
 
 SymbolButton.propTypes = {
   size: PropTypes.number.isRequired,
-<<<<<<< HEAD:src/SymbolButton.js
-  onPress: PropTypes.func,
-=======
   onPress: PropTypes.func.isRequired,
->>>>>>> 36f7b5512687036deacfd352e354b9d34daa265a:src/buttons/SymbolButton.js
   style: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
 };
