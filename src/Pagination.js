@@ -1,22 +1,14 @@
-import { StatusBar, View } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import Dots from './Dots';
-import SymbolButton from './SymbolButton';
-import TextButton from './TextButton';
-
-const BUTTON_SIZE = 40;
-
-const getDefaultStyle = isLight => ({
-  color: isLight ? 'rgba(0, 0, 0, 0.8)' : '#fff',
-});
 
 const Pagination = ({
   numPages,
   currentPage,
   isLight,
-  alterBottomColor,
+  bottomBarHeight,
   showSkip,
   showNext,
   showDone,
@@ -24,64 +16,69 @@ const Pagination = ({
   onSkip,
   onDone,
   skipLabel,
+  nextLabel,
+  SkipButtonComponent,
+  NextButtonComponent,
+  DoneButtonComponent,
+  DotComponent,
+  gone,
 }) => {
   const isLastPage = currentPage + 1 === numPages;
 
-  const SkipButton = showSkip &&
+  const SkipButtonFinal = showSkip &&
     !isLastPage && (
-      <TextButton
-        size={BUTTON_SIZE}
-        textStyle={getDefaultStyle(isLight)}
+      <SkipButtonComponent
+        isLight={isLight}
+        skipLabel={skipLabel}
         onPress={() => {
-          onSkip && onSkip();
-          StatusBar.setBarStyle('default');
+          if (typeof onSkip === 'function') {
+            onSkip();
+            setTimeout(gone, 500);
+          }
         }}
-      >
-        {skipLabel}
-      </TextButton>
+      />
     );
 
-  const NextButton = showNext &&
+  const NextButtonFinal = showNext &&
     !isLastPage && (
-      <SymbolButton
-        size={BUTTON_SIZE}
-        textStyle={getDefaultStyle(isLight)}
+      <NextButtonComponent
+        nextLabel={nextLabel}
+        isLight={isLight}
         onPress={onNext}
-      >
-        →
-      </SymbolButton>
+      />
     );
 
-  const DoneButton = showDone &&
+  const DoneButtonFinal = showDone &&
     isLastPage && (
-      <SymbolButton
-        size={BUTTON_SIZE}
-        textStyle={getDefaultStyle(isLight)}
-        style={{
-          borderRadius: BUTTON_SIZE / 2,
-          backgroundColor: 'rgba(255, 255, 255, 0.10)',
-        }}
+      <DoneButtonComponent
+        isLight={isLight}
         onPress={() => {
-          onDone && onDone();
-          StatusBar.setBarStyle('default');
+          if (typeof onDone === 'function') {
+            onDone();
+            setTimeout(gone, 500);
+          }
         }}
-      >
-        ✓
-      </SymbolButton>
+      />
     );
 
   return (
     <View
       style={{
+        height: bottomBarHeight,
         ...styles.container,
-        ...(alterBottomColor ? styles.overlay : {}),
       }}
     >
-      <View style={styles.buttonLeft}>{SkipButton}</View>
-      <Dots isLight={isLight} numPages={numPages} currentPage={currentPage} />
+      <View style={styles.buttonLeft}>{SkipButtonFinal}</View>
+      <Dots
+        isLight={isLight}
+        numPages={numPages}
+        currentPage={currentPage}
+        Dot={DotComponent}
+        style={styles.dots}
+      />
       <View style={styles.buttonRight}>
-        {NextButton}
-        {DoneButton}
+        {NextButtonFinal}
+        {DoneButtonFinal}
       </View>
     </View>
   );
@@ -91,41 +88,46 @@ Pagination.propTypes = {
   numPages: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   isLight: PropTypes.bool.isRequired,
-  alterBottomColor: PropTypes.bool.isRequired,
-  showNext: PropTypes.bool,
-  showSkip: PropTypes.bool,
-  showDone: PropTypes.bool,
-  onNext: PropTypes.func,
+  bottomBarHeight: PropTypes.number.isRequired,
+  showNext: PropTypes.bool.isRequired,
+  showSkip: PropTypes.bool.isRequired,
+  showDone: PropTypes.bool.isRequired,
+  onNext: PropTypes.func.isRequired,
   onSkip: PropTypes.func,
   onDone: PropTypes.func,
-  skipLabel: PropTypes.string.isRequired,
-};
-
-Pagination.defaultProps = {
-  showNext: true,
-  showSkip: true,
-  showDone: true,
+  skipLabel: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+    .isRequired,
+  nextLabel: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+    .isRequired,
+  SkipButtonComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    .isRequired,
+  DoneButtonComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    .isRequired,
+  NextButtonComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    .isRequired,
+  DotComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    .isRequired,
 };
 
 const styles = {
   container: {
-    height: 60,
     paddingHorizontal: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-  },
   buttonLeft: {
-    width: 70,
-    paddingLeft: 20,
+    width: 200,
+    flexShrink: 1,
+    alignItems: 'flex-start',
   },
   buttonRight: {
-    width: 70,
-    paddingRight: 10,
+    width: 200,
+    flexShrink: 1,
     alignItems: 'flex-end',
+  },
+  dots: {
+    flexShrink: 0,
   },
 };
 

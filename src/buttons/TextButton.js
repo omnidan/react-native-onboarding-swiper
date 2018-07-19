@@ -2,10 +2,10 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TextButton = ({ size, onPress, textStyle, children }) => (
-  <View style={{ flex: 0 }}>
-    <TouchableOpacity 
-      style={{ flex: 0 }} 
+const TextButton = ({ size, onPress, textStyle, style, children }) => (
+  <View style={{ flex: 0, paddingHorizontal: 10, ...style }}>
+    <TouchableOpacity
+      style={{ flex: 0 }}
       onPress={onPress}
       hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
     >
@@ -16,7 +16,7 @@ const TextButton = ({ size, onPress, textStyle, children }) => (
 
 TextButton.propTypes = {
   size: PropTypes.number.isRequired,
-  onPress: PropTypes.func,
+  onPress: PropTypes.func.isRequired,
   textStyle: Text.propTypes.style,
 };
 
