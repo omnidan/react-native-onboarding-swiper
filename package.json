@@ -1,6 +1,6 @@
 {
   "name": "react-native-onboarding-swiper",
-  "version": "0.3.0",
+  "version": "0.6.0",
   "description": "Delightful Onboarding for your React-Native App",
   "main": "src/index.js",
   "scripts": {
@@ -19,7 +19,9 @@
     "Tutorial",
     "Intro",
     "Swiper",
-    "Welcome"
+    "Welcome",
+    "Introduction",
+    "Instructions"
   ],
   "author": "Gosha Arinich, Johannes Filter",
   "license": "MIT",
@@ -30,9 +32,25 @@
   "dependencies": {
     "tinycolor2": "^1.4.1"
   },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-react-native": "^3.2.0",
+    "prettier": "^1.9.2"
+  },
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
     "prop-types": "*"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }

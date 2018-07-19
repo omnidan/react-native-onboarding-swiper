@@ -4,10 +4,20 @@ import PropTypes from 'prop-types';
 
 const SymbolButton = ({ size, onPress, style, textStyle, children }) => (
   <View
-    style={{ height: size, width: size, justifyContent: 'center', ...style }}
+    style={{
+      height: size,
+      width: size,
+      justifyContent: 'center',
+      alignItems: 'center',
+      ...style,
+    }}
   >
-    <TouchableOpacity 
-      style={{ flex: 0 }} 
+    <TouchableOpacity
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
       onPress={onPress}
       hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
     >
@@ -20,7 +30,11 @@ const SymbolButton = ({ size, onPress, style, textStyle, children }) => (
 
 SymbolButton.propTypes = {
   size: PropTypes.number.isRequired,
+<<<<<<< HEAD:src/SymbolButton.js
   onPress: PropTypes.func,
+=======
+  onPress: PropTypes.func.isRequired,
+>>>>>>> 36f7b5512687036deacfd352e354b9d34daa265a:src/buttons/SymbolButton.js
   style: ViewPropTypes.style,
   textStyle: Text.propTypes.style,
 };
